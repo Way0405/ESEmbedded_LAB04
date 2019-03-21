@@ -3,17 +3,19 @@
 
 //REG OPERATIONS
 
-#define UINT32_1 ((uint32_t)1)
+#define UINT32_1 ((uint32_t)1)//1轉成000000000.....1（31個0） 32確保為bit
 
 #define REG(addr) (*((volatile uint32_t *)(addr)))
+//讀到這個地址的數值
 
-#define SET_BIT(addr, bit) (REG(addr) |= UINT32_1 << (bit))
-#define CLEAR_BIT(addr, bit) (REG(addr) &= ~(UINT32_1 << (bit)))
+#define SET_BIT(addr, bit) (REG(addr) |= UINT32_1 << (bit))//產生ser mask
+#define CLEAR_BIT(addr, bit) (REG(addr) &= ~(UINT32_1 << (bit)))//產生clear	 mask
 
 //RCC
-#define RCC_BASE 0x40023800
+#define RCC_BASE 0x40023800//RCC addr (botton)
+/*reset code */
 
-#define RCC_AHB1ENR_OFFSET 0x30
+#define RCC_AHB1ENR_OFFSET 0x30//read .1.10 rcc base offxet
 #define GPIO_EN_BIT(port) (port)
 
 //GPIO
@@ -23,10 +25,13 @@
 #define GPIO_PORTD 3
 
 #define GPIO_BASE(port) (0x40020000 + 0x400 * (port))
+//port=a,b,c,d....
+//#define GPIO_BASE(GPIO_PORTC) (0x40020000 + 0x400 * (GPIO_PORTC))
 
 #define GPIOx_MODER_OFFSET 0x00
 #define MODERy_1_BIT(y) ((y)*2 + 1)
 #define MODERy_0_BIT(y) ((y)*2)
+//Ly=pin[15:0]
 
 #define GPIOx_OTYPER_OFFSET 0x04
 #define OTy_BIT(y) (y)
